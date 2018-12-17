@@ -1,6 +1,12 @@
 ---
 
 Resources:
+
+  MyRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: fargate-demo2
+
   RootRole:
     Type: "AWS::IAM::Role"
     Description: A baseline IAM role for ECS Task Execution
@@ -19,3 +25,16 @@ Resources:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
       Path: "/"
       RoleName: fargateDemoEcsTaskExecutionRole
+
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      RequiresCompatibilities:
+        - "FARGATE"
+      NetworkMode: awsvpc
+      Cpu: 256
+      Memory: 0.5GB
+      ContainerDefinitions:
+        -
+          Name: "fargate-web-app"
+          Image: "fargate-demo2"

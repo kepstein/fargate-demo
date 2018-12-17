@@ -1,8 +1,8 @@
 # Fargate Demo
 1. Prepare for ECS by creating a very basic IAM Role for ECS
-```bash
-$ aws cloudformation create-stack --stack-name ecsIAMRole --template-body file://CloudFormation/ecs-role.yml --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM
-```
+    ```bash
+    $ aws cloudformation create-stack --stack-name ecsIAMRole --template-body file://CloudFormation/ecs-role.yml --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM
+    ```
 2. Create the ECS Cluster. This is different from a traditional cluster which usually serves as a resource boundary. with Fargate, the cluster serves only as an administrative Boundary.
 	1. An AWS best-practice is to actually have the Fargate Cluster assigned to it’s own VPC. This is because we want to make sure that services that scale massively don’t compete for resources required by other services.
 		1. An alternative is to assign dedicated subnets to the Fargate cluster.

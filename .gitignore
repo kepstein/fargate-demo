@@ -82,3 +82,15 @@ fabric.properties
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/pycharm
+/.idea/aws.xml
+/.idea/encodings.xml
+/.idea/fargate_app.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
+.idea/aws.xml
+.idea/encodings.xml
+.idea/fargate_app.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml

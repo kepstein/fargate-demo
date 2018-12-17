@@ -2,12 +2,17 @@
 
 Resources:
 
-  MyRepository:
+  FargateDemoRepository:
     Type: AWS::ECR::Repository
     Properties:
       RepositoryName: fargate-demo2
 
-  RootRole:
+  FargateDemoCuster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: String
+
+  MyEcsTaskExecutionRole:
     Type: "AWS::IAM::Role"
     Description: A baseline IAM role for ECS Task Execution
     Properties:
@@ -31,10 +36,13 @@ Resources:
     Properties:
       RequiresCompatibilities:
         - "FARGATE"
+      ExecutionRoleArn: !GetAtt MyEcsTaskExecutionRole.Arn
       NetworkMode: awsvpc
       Cpu: 256
       Memory: 0.5GB
       ContainerDefinitions:
         -
-          Name: "fargate-web-app"
-          Image: "fargate-demo2"
+          Name: fargate-web-app
+          Image: 385000587821.dkr.ecr.us-east-1.amazonaws.com/fargate-demo2
+          PortMappings:
+            - ContainerPort: 80

@@ -1,11 +1,14 @@
 ---
 
+Description: >
+  Builds a simple Fargate environment, and defines a sample Task Definition
+
 Resources:
 
   FargateDemoRepository:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: fargate-demo2
+      RepositoryName: fargate-demo
 
   FargateDemoCuster:
     Type: AWS::ECS::Cluster
@@ -19,8 +22,7 @@ Resources:
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
-          -
-            Effect: Allow
+          - Effect: Allow
             Principal:
               Service:
                 - ecs-tasks.amazonaws.com
@@ -41,8 +43,7 @@ Resources:
       Cpu: 256
       Memory: 0.5GB
       ContainerDefinitions:
-        -
-          Name: fargate-web-app
+        - Name: fargate-web-app
           Image: 385000587821.dkr.ecr.us-east-1.amazonaws.com/fargate-demo2
           PortMappings:
             - ContainerPort: 80

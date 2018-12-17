@@ -10,32 +10,32 @@ Resources:
   FargateDemoCuster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: String
+      ClusterName: fargate-demo
 
   MyEcsTaskExecutionRole:
-    Type: "AWS::IAM::Role"
+    Type: AWS::IAM::Role
     Description: A baseline IAM role for ECS Task Execution
     Properties:
       AssumeRolePolicyDocument:
-        Version: "2012-10-17"
+        Version: 2012-10-17
         Statement:
           -
-            Effect: "Allow"
+            Effect: Allow
             Principal:
               Service:
-                - "ecs-tasks.amazonaws.com"
+                - ecs-tasks.amazonaws.com
             Action:
-              - "sts:AssumeRole"
+              - sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
-      Path: "/"
+      Path: /
       RoleName: fargateDemoEcsTaskExecutionRole
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
       RequiresCompatibilities:
-        - "FARGATE"
+        - FARGATE
       ExecutionRoleArn: !GetAtt MyEcsTaskExecutionRole.Arn
       NetworkMode: awsvpc
       Cpu: 256

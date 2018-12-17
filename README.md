@@ -22,6 +22,7 @@ aws ecr get-login --no-include-email
 ```bash
 docker login -u AWS -p eyJwYXlsb2FkIjoicUhBYVdYZEN1cWdkRDgvcHlTMW9TbnZ0ZU5MektTWjY0aC9JVHhhZSsyT3c5WXY3blRkMUVXR1p3ZHZ4dTFiVUhmcDJNZGowQ095Uzg3SkhOWGZTSzBDaTExMnlaYkxicml0RlZYRHpwc2hab1RTbVZQNTd2OTkyMTRtNlBZSzFtVGlVckhrWEVPcVJKLzNlb2FzWjNCZnViYUZnVkxMdUpqZnllaXJGM3p6VTlROTNwQVlDRWVyT09Ib3hwRHhMWEg1UFdkZGZDU255ckN5Ukg3SGpMTnhrek9lRjBQVFQ5Ymh4Mm9TblppTXNYUGh4c05uWW96QVJlNlRaTmM2ZmovZnEvYlI4TjlSbDdwMC8ySk9JSTRpUDcxenE2ejBLQzQ5dm1Ea0lLLytibGZPQ1diTXNmNkNCcHUrNXFGOGZZNEVLYUpTcW5iM083UkVZcmxZNXF2eUNRZFZ0MnB5TUJYVWJ2QU9pMTFQRktDTXFQQ2h2UGhNdjh0MlZQZ2FiMmV1Nk9wc3lGYzl1K1VFOWI0RTRIQWhuQ0t1Y0ZZQ1dORHpnaU5kWXlueTNnOEkyMVlCSk82THdiL254cXdaSjFJVmZBcXJ1dldVL3FjNUJSQmI2N3dnakpmWFVaWkw1ViszSDBCeW1YQis0OWZTRURUR1hOUUNkVTA0NG1YUEFBN2x0alRtaTVqV1FOMHFGeVloUXUwUHRoMG5sQzI5Z3NlMVBIOGFEeWE4QzJzd3BaDNXdGtYSEwwMzBIWXR4TW5jR09uOXlzSzJNMGNvb21OS2ZLY2VYTHk2MWlTdVVxS2ovQ3hlNjZVNUlvenBPanZSTnU3SldqOURvSUZvd3FNclJEaDBJOEZnb0pTZ2hOUzZJMUsxVG1oZGdxUHlUWFAyVnlvOUlTeHF5ZTFhaUNlOGNnQld6QjhIbE80aENacm8ya0phYi93aWJiZ3FGYkRZTm5FSFZQNDFtbnAwMHpsdW5IYVlGUGNRQUN6WjhXViswQlpkcHoxQ3RhNk5BQjhxaGFwRW5QdzVEUFFvaWFIYUZHNUkyMzB5c0pUeVBZVk9YSzFqU0NEaWphYUdhVHNpd3ZNQ2xjK0VjNlE3RVQ4MCthakZnU2c4bDVzVGFoYkVXcFAwNlpDRmZvK2NqUTQ0dmpzL0RCc2dpZXE5NXYzNm00dDNKWmlXYmkrQURMQ2c2anNsbklJSk5CemdVZ2g2ZUtlMW1iQ45Z3ozZERhd2J1RWRpQWRreDRFUDFpTnF6aXN4ZzNXZ2lMSk9TdTQ2enl0U2Joakxta3RYQU16MExieHV6b2Z0VlNmZzcxcFRpVndlMXhTclZrc09nUWRjVjdyNVA4NWhVSUdyQWVTMndsU0pwYkRBTTM1aU5GQWQyVU95Q3Z6bkk1TGJQcUhQazJ6V2ZXczErdXB1MmIzanJRUW9wWG5LWnMiLCJkYXRha2V5IjoiQVFFQkFIaHdtMFlhSVNKZVJ0Sm01bjFHNnVxZWVrWHVvWFhQZTVVRmNlOVJxOC8xNHdBQUFINHdmQVlKS29aSWh2Y05BUWNHb0c4d2JRSUJBREJvQmdrcWhraUc5dzBCQndFd0hnWUpZSVpJQVdVREJBRXVNQkVFREMvRndnbUUzUXUxdHhrWWZBSUJFSUE3V0RWcUhFNTRBUi81UzFSTzBaaDdNK1FXUUZwSEQ1TUtQZ3R5YXQ0TzI5RTFsOEN1Z1h0ckpUTmszRHJxN3NCOFNjMFloOFIreTIzMkk2Zz0iLCJ2ZXJzaW9uIjoiMiIsInR5cGUiOiJEQVRBX0tFWSIsImV4cGlyYXRpb24iOjE1NDUxMTM0NTh9 https://123456789012.dkr.ecr.us-east-1.amazonaws.com
 ```
+
 	4. Next we need to tag the instance we created, and push it to ECR.
 ```bash
 $ docker image ls
@@ -36,6 +37,7 @@ fargate-demo                                                latest              
 httpd                                                       latest              2a51bb06dc8b        4 weeks ago         132MB
 $ 123456789012.dkr.ecr.us-east-1.amazonaws.com/fargate-demo
 ```
+
 3. With the image pushed to ECR, we can now define a Task Definition
 	1. From the ECR console page, click the "Task Definitions" link, and then click "Create new Task Definition"
 	2. For the launch type compatibility, select the "FARGATE" option, and then click "Next step"

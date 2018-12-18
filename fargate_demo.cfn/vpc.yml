@@ -9,3 +9,8 @@ common_parameters: &common_parameters
 stacks:
   FargateDemo:
     template_path: templates/fargate-demo.yml
+    variables:
+      SubnetAZ1: ${subnet_az1}
+      SubnetAZ2: ${subnet_az2}
+      SubnetAZ3: ${subnet_az3}
+      RepoName: ${repo_name}

@@ -3,6 +3,29 @@
 Description: >
   Builds a simple Fargate environment, and defines a sample Task Definition
 
+Parameters:
+
+  SubnetAZ1:
+    Description: Subnet for ALB in zone A
+    Type: String
+
+  SubnetAZ2:
+    Description: Subnet for ALB in zone B
+    Type: String
+
+  SubnetAZ3:
+    Description: Subnet for ALB in zone C
+    Type: String
+
+  RepoName:
+    Description: Name for the ECR Repository
+    Type: String
+
+#  MyVpcId:
+#    Description: The ID for the VPC
+#    Type: AWS::EC2::VPC::Id
+#    Default: vpc-72f34a17
+
 Resources:
 
   FargateDemoRepository:
@@ -44,6 +67,35 @@ Resources:
       Memory: 0.5GB
       ContainerDefinitions:
         - Name: fargate-web-app
-          Image: 385000587821.dkr.ecr.us-east-1.amazonaws.com/fargate-demo
+          Image: !Join ["", [!Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref RepoName]]
           PortMappings:
             - ContainerPort: 80
+
+  FargateDemoSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow http to client host
+      VpcId: vpc-72f34a17
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+
+  FargateDemoALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Scheme: internet-facing
+      Subnets:
+        - Ref: SubnetAZ1
+        - Ref: SubnetAZ2
+        - Ref: SubnetAZ3
+      LoadBalancerAttributes:
+        - Key: idle_timeout.timeout_seconds
+          Value: '50'
+      SecurityGroups:
+        - Ref: FargateDemoSecurityGroup

@@ -5,26 +5,9 @@ Description: >
 
 Parameters:
 
-  SubnetAZ1:
-    Description: Subnet for ALB in zone A
-    Type: String
-
-  SubnetAZ2:
-    Description: Subnet for ALB in zone B
-    Type: String
-
-  SubnetAZ3:
-    Description: Subnet for ALB in zone C
-    Type: String
-
   RepoName:
     Description: Name for the ECR Repository
     Type: String
-
-#  MyVpcId:
-#    Description: The ID for the VPC
-#    Type: AWS::EC2::VPC::Id
-#    Default: vpc-72f34a17
 
 Resources:
 

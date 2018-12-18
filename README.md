@@ -1,5 +1,27 @@
 # Fargate Demo
 This project is intended as a simple demonstration of AWS Fargate, and not intended for any type of production use. 
+
+This project is organized as follows:
+
+├── Dockerfile
+├── README.md
+├── build
+│   ├── index.html
+│   └── woohoo.jpg
+├── deploy.sh
+├── fargate_demo.cfn
+│   ├── fargate.yml
+│   ├── prod-us-east-1.env
+│   └── templates
+│       └── fargate-demo.yml
+└── runway.yml
+
+## Notes
+- The Dockerfile is used to create the image for the container. 
+- runway.yml is the configuration file for [Onica's Runway.](https://github.com/onicagroup/runway)  
+- Runway, is not required. You can deploy the template either using the deploy.sh script, or manually from the AWS CloudFormation Console
+
+## Installation Notes 
 1. Prepare for ECS by creating a very basic IAM Role for ECS
     ```bash
     $ aws cloudformation create-stack --stack-name ecsIAMRole --template-body file://CloudFormation/ecs-role.yml --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM

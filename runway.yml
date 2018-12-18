@@ -1,0 +1,10 @@
+deployments:
+  - modules:
+      - fargate_demo.cfn
+    regions:
+      - us-east-1
+    account-id:
+      test: 385000587821
+      prod: 385000587821
+      staging: 385000587821
+      common: 385000587821

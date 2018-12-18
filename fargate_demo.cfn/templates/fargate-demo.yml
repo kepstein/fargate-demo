@@ -1,0 +1,49 @@
+---
+
+Description: >
+  Builds a simple Fargate environment, and defines a sample Task Definition
+
+Resources:
+
+  FargateDemoRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: fargate-demo
+
+  FargateDemoCuster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: fargate-demo
+
+  MyEcsTaskExecutionRole:
+    Type: AWS::IAM::Role
+    Description: A baseline IAM role for ECS Task Execution
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      Path: /
+      RoleName: fargateDemoEcsTaskExecutionRole
+
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      RequiresCompatibilities:
+        - FARGATE
+      ExecutionRoleArn: !GetAtt MyEcsTaskExecutionRole.Arn
+      NetworkMode: awsvpc
+      Cpu: 256
+      Memory: 0.5GB
+      ContainerDefinitions:
+        - Name: fargate-web-app
+          Image: 385000587821.dkr.ecr.us-east-1.amazonaws.com/fargate-demo
+          PortMappings:
+            - ContainerPort: 80

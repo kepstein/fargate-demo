@@ -1,0 +1,11 @@
+sys_path: ./
+namespace: ${customer}-${environment}
+stacker_bucket: stacker-${customer}-${region}-${environment}
+
+common_parameters: &common_parameters
+  CustomerName: ${customer}
+  EnvironmentName: ${environment}
+
+stacks:
+  FargateDemo:
+    template_path: templates/fargate-demo.yml

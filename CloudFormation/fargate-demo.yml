@@ -44,6 +44,6 @@ Resources:
       Memory: 0.5GB
       ContainerDefinitions:
         - Name: fargate-web-app
-          Image: 385000587821.dkr.ecr.us-east-1.amazonaws.com/fargate-demo2
+          Image: 385000587821.dkr.ecr.us-east-1.amazonaws.com/fargate-demo
           PortMappings:
             - ContainerPort: 80

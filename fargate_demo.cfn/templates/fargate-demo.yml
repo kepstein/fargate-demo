@@ -28,6 +28,108 @@ Parameters:
 
 Resources:
 
+  FargateDemoVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: 'false'
+      EnableDnsHostnames: 'false'
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: fargate-demo
+
+  FargateDemoInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: fargate-demo
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: FargateDemoVpc
+      InternetGatewayId:
+        Ref: FargateDemoInternetGateway
+
+  FargateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: FargateDemoVpc
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: "us-east-1a"
+      Tags:
+        - Key: Name
+          Value: fargate-demo-public
+
+  FargateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: FargateDemoVpc
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: "us-east-1b"
+      Tags:
+        - Key: Name
+          Value: fargate-demo-public
+
+  FargateSubnet3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: FargateDemoVpc
+      CidrBlock: 10.0.3.0/24
+      AvailabilityZone: "us-east-1c"
+      Tags:
+        - Key: Name
+          Value: fargate-demo-public
+
+  FargatePublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: FargateDemoVpc
+      Tags:
+        - Key: Name
+          Value: fargate-demo public rout table
+
+  FargatePublicDefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn: FargateDemoInternetGateway
+    Properties:
+      RouteTableId:
+        Ref: FargatePublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: FargateDemoInternetGateway
+
+  FargateSubnet1RouteAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: FargateSubnet1
+      RouteTableId:
+        Ref: FargatePublicRouteTable
+
+  FargateSubnet2RouteAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: FargateSubnet2
+      RouteTableId:
+        Ref: FargatePublicRouteTable
+
+  FargateSubnet3RouteAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: FargateSubnet3
+      RouteTableId:
+        Ref: FargatePublicRouteTable
+
   FargateDemoRepository:
     Type: AWS::ECR::Repository
     Properties:
@@ -66,7 +168,7 @@ Resources:
       Cpu: 256
       Memory: 0.5GB
       ContainerDefinitions:
-        - Name: fargate-web-app
+        - Name: fargate-demo
           Image: !Join ["", [!Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref RepoName]]
           PortMappings:
             - ContainerPort: 80
@@ -75,7 +177,8 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Allow http to client host
-      VpcId: vpc-72f34a17
+      VpcId:
+        Ref: FargateDemoVpc
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
@@ -91,9 +194,9 @@ Resources:
     Properties:
       Scheme: internet-facing
       Subnets:
-        - Ref: SubnetAZ1
-        - Ref: SubnetAZ2
-        - Ref: SubnetAZ3
+        - Ref: FargateSubnet1
+        - Ref: FargateSubnet2
+        - Ref: FargateSubnet3
       LoadBalancerAttributes:
         - Key: idle_timeout.timeout_seconds
           Value: '50'

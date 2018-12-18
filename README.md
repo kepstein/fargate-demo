@@ -2,7 +2,7 @@
 This project is intended as a simple demonstration of AWS Fargate, and not intended for any type of production use. 
 
 This project is organized as follows:
-
+```
 ├── Dockerfile
 ├── README.md
 ├── build
@@ -15,7 +15,7 @@ This project is organized as follows:
 │   └── templates
 │       └── fargate-demo.yml
 └── runway.yml
-
+```
 ## Notes
 - The Dockerfile is used to create the image for the container. 
 - runway.yml is the configuration file for [Onica's Runway.](https://github.com/onicagroup/runway)  

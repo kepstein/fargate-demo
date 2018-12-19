@@ -20,6 +20,7 @@ This project is organized as follows:
 - The Dockerfile is used to create the image for the container. 
 - runway.yml is the configuration file for [Onica's Runway.](https://github.com/onicagroup/runway)  
 - Runway, is not required. You can deploy the template either using the deploy.sh script, or manually from the AWS CloudFormation Console
+- If you'd like to learn more about [Onica's perspective on Containers on AWS download our whitepaper](https://insights.onica.com/understanding-containers-on-aws)
 
 ## Installation Notes 
 1. Prepare by deploying a CloudFormation stack

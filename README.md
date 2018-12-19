@@ -22,15 +22,10 @@ This project is organized as follows:
 - Runway, is not required. You can deploy the template either using the deploy.sh script, or manually from the AWS CloudFormation Console
 
 ## Installation Notes 
-1. Prepare for ECS by creating a very basic IAM Role for ECS
+1. Prepare by deploying a CloudFormation stack
     ```bash
-    $ aws cloudformation create-stack --stack-name ecsIAMRole --template-body file://CloudFormation/ecs-role.yml --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM
+    $ ./deploy.sh fargate-demo   # change fargate-demo for any value you would like to name your CloudFormation Stack
     ```
-2. Create the ECS Cluster. This is different from a traditional cluster which usually serves as a resource boundary. with Fargate, the cluster serves only as an administrative Boundary.
-	1. An AWS best-practice is to actually have the Fargate Cluster assigned to it’s own VPC. This is because we want to make sure that services that scale massively don’t compete for resources required by other services.
-		1. An alternative is to assign dedicated subnets to the Fargate cluster.
-	2. Give the cluster a name, and ignore the networking section for now, and hit the "create" button.
-3. Before we can create a Task Definition we have to have a repository. This could be an image in Docker Hub for example, or we can use ECR. For this project we will create a Docker Image on our local machine, and then push the image to ECR
 	1. Build the docker container
     ```bash
     $ docker build -t fargate-demo .
